@@ -30,8 +30,10 @@ def cart(request):
    return render(request, 'cart.html')
 def contacts(request):
    return render(request, 'contacts.html')
+
 def discounts(request):
    return render(request, 'discounts.html')
+
 def products(request):
    return render(request, 'products.html')
 
@@ -46,7 +48,12 @@ def updateItem(request):
 
    #customer = request.user.customer
    product =  Product.objects.get(id=productId)
-   quantity=0
-   quantity+=1
-   return JsonResponse(f'Items was added {product.details} * {quantity}', safe=False)
+   return JsonResponse(f'{product.id}', safe=False)
 
+def product(request):
+   id = request.GET.get('id', '')
+   
+   product =  Product.objects.get(id=id)
+   product.price=f"{product.price:.2f}"
+
+   return render(request, 'product.html', {'id':id, 'price':product.price, 'name':product.name})

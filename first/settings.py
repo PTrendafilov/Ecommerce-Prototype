@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-tpw=1$w^j(ke11+1mbmbgb@5sry7-400n-nrvdgnmfeb*0(p*d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['hiddentreasures.loca.lt', '127.0.0.1']
+ALLOWED_HOSTS = ['hiddentreasures.loca.lt', '127.0.0.1', 'ecommerce.loca.lt']
 
 
 # Application definition
@@ -78,11 +78,11 @@ WSGI_APPLICATION = 'first.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbname',
-        'USER': 'user',
-        'PASSWORD':'password',
+        'NAME': 'ecommerce',
+        'USER': 'postgres',
+        'PASSWORD':'777777Ogi',
         'HOST': 'localhost',
-        'PORT':'5432',
+        'PORT':'5433',
     }
 }
 

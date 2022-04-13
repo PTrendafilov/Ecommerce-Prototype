@@ -4,7 +4,8 @@ from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 
 class Product(models.Model):
-    details = models.CharField(max_length=100)
+    name=models.CharField(max_length=30)
+    details = models.TextField()
     image = models.ImageField(upload_to='pics')
     price = models.FloatField()
     old_price = models.FloatField()
