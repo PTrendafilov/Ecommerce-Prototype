@@ -22,43 +22,7 @@
       <link href="{% static 'css/style.css' %}" rel="stylesheet" />
       <!-- responsive style -->
       <link href="{%static 'css/responsive.css' %}" rel="stylesheet" />
-      <style>
-         #register{
-            display: inline-block;
-            margin-top: -3px;
-            border-radius: 35px;
-            border: 1px solid #f7444e;
-            background-color: #f7444e;
-            color: white;
-            font-weight: 600;
-            -webkit-transition: all 0.3s;
-            transition: all 0.3s;
-         }
-         #register:hover{
-               color: #f7444e;
-               background-color: rgb(255, 255, 255);
-         }
-         .navbar-nav input{
-            margin-top: -4px;
-            margin-bottom: 3px;
-            border-radius:35px;
-            padding-left: 15px;
-            border: 1px solid #f7444e;
-            outline: none;
-         }
-         .navbar-nav input:focus{
-            border: 2px solid #f7444e;
-         }
-         .nav_search-btn{
-            margin-top: -2px!important;
-         }
-         #Capa_1{
-            margin-top: -3px!important;
-         }
-         .option2, .option1{
-            cursor: pointer;
-         }
-      </style>
+      <link href="{%static 'css/menu.css' %}" rel="stylesheet" />
       <script>
          var user='{{request.user}}';
          function getToken(name) {
@@ -92,7 +56,7 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                      <ul class="navbar-nav">
                         <li class="nav-item active">
-                           <a class="nav-link" href="#">{{menu.page1}}<span class="sr-only">(current)</span></a>
+                           <a class="nav-link" href="/">{{menu.page1}}<span class="sr-only">(current)</span></a>
                         </li>
                         <!--
                        <li class="nav-item dropdown">
@@ -285,7 +249,7 @@
               {% endfor %}
             </div>
             <div class="btn-box">
-               <a href="">
+               <a href="products">
                View All products
                </a>
             </div>
