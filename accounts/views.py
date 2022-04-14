@@ -1,8 +1,13 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
+from ecommerce.models import *
 # Create your views here.
-def login(request):
+def login(request): 
+    menu=Menu.objects.first()
+
+    site=Site.objects.first()
+
     if request.method=='POST':
         username=request.POST['username']
         password=request.POST['password']
@@ -16,7 +21,8 @@ def login(request):
             messages.info(request,'invalid credentials')
             return redirect('login')
     else:
-        return render(request,'login.html')
+        print("Hello")
+        return render(request,'login.html', {'menu':menu, 'site':site})
 def register(request):
     if request.method=='POST':
         first_name=request.POST['first_name']

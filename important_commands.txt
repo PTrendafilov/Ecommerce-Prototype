@@ -1,0 +1,5 @@
+manage.py migrate --fake ecommerce zero
+manage.py migrate ecommerce 0001
+manage.py makemigrations
+manage.py sqlmigrate ecommrce 0001
+manage.py runserver

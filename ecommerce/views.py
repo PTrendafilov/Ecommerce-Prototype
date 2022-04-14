@@ -35,7 +35,16 @@ def discounts(request):
    return render(request, 'discounts.html')
 
 def products(request):
-   return render(request, 'products.html')
+   products=Product.objects.all()
+   for product in products:
+      product.price=f"{product.price:.2f}"
+      product.old_price=f"{product.old_price:.2f}"
+
+   menu=Menu.objects.first()
+
+   site=Site.objects.first()
+
+   return render(request, 'products.html', {'products':products, 'menu':menu, 'site':site})
 
 
 def updateItem(request):
@@ -56,4 +65,9 @@ def product(request):
    product =  Product.objects.get(id=id)
    product.price=f"{product.price:.2f}"
 
-   return render(request, 'product.html', {'id':id, 'price':product.price, 'name':product.name})
+   #return render(request, 'product.html', {'id':id, 'price':product.price, 'name':product.name})
+   menu=Menu.objects.first()
+
+   site=Site.objects.first()
+
+   return render(request, 'product.html', {'product':product,'id':id,'details':product.details, 'price':product.price, 'name':product.name, 'image':product.image.url, 'menu':menu, 'site':site})

@@ -36,3 +36,13 @@ function updateUserOrder(productId, action){
     })
 }
 
+
+let addBtn=document.getElementById('add-button');
+
+addBtn.addEventListener('click',function(){
+    var productId=this.dataset.product
+    var action = this.dataset.action
+    console.log('productId:', productId,'action:',action)
+    console.log('USER:', user)
+})
+
