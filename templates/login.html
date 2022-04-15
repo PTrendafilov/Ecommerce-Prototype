@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="english">
    <head>
-      <!-- Basic -->
+      <!-- Basic --> 
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <!-- Mobile Metas -->
@@ -13,7 +13,7 @@
       <meta name="description" content="" />
       <meta name="author" content="" />
       <link rel="shortcut icon" href="{{site.logo.url}}" type="">
-      <title>Famms - Fashion HTML Template</title>
+      <title>ECOMMERCE</title>
       <!-- bootstrap core css -->
       <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}" />
       <!-- font awesome style -->
@@ -42,6 +42,19 @@
         }
         const csrftoken = getToken('csrftoken');
       </script>
+      <style>
+        .subscribe_section{
+            margin-top: 15px;
+        }
+        input[type=submit]{
+            padding-left: 44%!important;
+            background-color:#f7444e!important;
+        }
+        input{
+           font-size: 24px!important;
+           text-align: center!important;
+        }
+      </style>
    </head>
    <body>
       <div class="hero_area">
@@ -133,8 +146,9 @@
                             {% csrf_token %}
                             <input type="text" name="username" placeholder="username"><br>
                             <input type="password" name="password" placeholder="password"><br>
-                            <input type="submit">
+                            <input type="submit" placeholder="Submit">
                         </form>
+                        <br><br>
                         <div>
                             {% for message in messages %}
                             <h3>{{message}}</h3>
