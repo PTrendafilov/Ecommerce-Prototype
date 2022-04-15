@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from ecommerce.models import *
+from ecommerce.views import cart_dict, total_money
 # Create your views here.
 def login(request): 
     menu=Menu.objects.first()
@@ -24,6 +25,9 @@ def login(request):
         print("Hello")
         return render(request,'login.html', {'menu':menu, 'site':site})
 def register(request):
+    menu=Menu.objects.first()
+
+    site=Site.objects.first()
     if request.method=='POST':
         first_name=request.POST['first_name']
         last_name=request.POST['last_name']
@@ -49,7 +53,10 @@ def register(request):
             return redirect('register')
         return redirect('/')
     else:
-        return render(request,'register.html')
+        return render(request,'register.html', {'menu':menu, 'site':site})
 def logout(request):
+    global cart_dict, total_money
+    cart_dict={}
+    total_money=0
     auth.logout(request)
     return redirect('/')

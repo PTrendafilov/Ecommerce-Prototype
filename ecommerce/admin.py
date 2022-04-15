@@ -11,3 +11,4 @@ admin.site.register(Notice)
 
 admin.site.register(Site)
 
+admin.site.register(Order)

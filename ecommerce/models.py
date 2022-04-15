@@ -29,3 +29,15 @@ class Notice(models.Model):
 class Site(models.Model):
     logo = models.ImageField(upload_to='pics')
     notice_image=models.ImageField(upload_to='pics')
+
+class Order(models.Model):
+    user = models.CharField(max_length=100)
+    adress = models.TextField()
+    email=models.EmailField(max_length = 128)
+    phone_number=models.CharField(max_length=30)
+    first_name=models.CharField(max_length=30)
+    last_name=models.CharField(max_length=30)
+    details = models.TextField()
+    price = models.FloatField()
+    is_ready=models.BooleanField(default=False)
+    
