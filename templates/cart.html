@@ -63,7 +63,9 @@
 
       th,
       td {
-         padding: 15px;
+         padding: 10px;
+         font-size: 20px;
+         max-width: 100px;
       }
 
       #total-money {
@@ -78,6 +80,31 @@
 
       #check-out-btn {
          background-color: #f7444e;
+      }
+
+      table {
+         padding: 100px !important;
+         background-color: white;
+      }
+
+      input[type=submit] {
+         padding-left: 44% !important;
+         background-color: #f7444e !important;
+      }
+
+      input {
+         font-size: 24px !important;
+         text-align: center !important;
+      }
+      table input{
+         background-color: rgb(223, 223, 223)!important;
+         margin-top: 5px!important;
+      }
+      table{
+         margin-bottom: 50px;
+      }
+      input{
+         margin-top: -10px!important;
       }
    </style>
 </head>
@@ -95,7 +122,7 @@
                </button>
                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav">
-                     <li class="nav-item active">
+                     <li class="nav-item">
                         <a class="nav-link" href="/">{{menu.page1}}<span class="sr-only">(current)</span></a>
                      </li>
                      <!--
@@ -109,16 +136,17 @@
                      <li class="nav-item">
                         <a class="nav-link" href="products">{{menu.page2}}</a>
                      </li>
+                     <!--
                      <li class="nav-item">
                         <a class="nav-link" href="discounts">{{menu.page3}}</a>
                      </li>
                      <li class="nav-item">
                      <li class="nav-item">
                         <a class="nav-link" href="contacts">{{menu.page4}}</a>
-                     </li>
+                     </li>-->
                      {% if user.is_authenticated %}
                      <li class="nav-item">
-                        <a class="nav-link" href="#">Account</a>
+                        <a class="nav-link" href="account">Account</a>
                      </li>
 
                      <li class="nav-item">
@@ -135,8 +163,12 @@
                      {% endif %}
                      {% endif %}
                      {% if menu.cart is True %}
-                     <li class="nav-item">
-                        <a class="nav-link" href="cart">
+                     <li class="nav-item active">
+                        {% if user.is_authenticated %}
+                        <a class="nav-link"href="cart">
+                        {% else %}
+                        <a class="nav-link"href="accounts/register">
+                        {%endif%}
                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                               xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029"
                               style="enable-background:new 0 0 456.029 456.029;" xml:space="preserve">
@@ -151,9 +183,8 @@
                                  d="M215.04,389.55c-1.024-28.16-24.576-50.688-52.736-50.688c-29.696,1.536-52.224,26.112-51.2,55.296
                                           c1.024,28.16,24.064,50.688,52.224,50.688h1.024C193.536,443.31,216.576,418.734,215.04,389.55z" />
                            </svg>
-
                         </a>
-
+                        
                      </li>
                      {% endif %}
                      {% if menu.search is True %}
@@ -167,46 +198,84 @@
             </nav>
          </div>
       </header>
+      <section class="subscribe_section">
+         <div class="container-fuild">
+            <div class="box">
+               <div class="row">
+                  <div class="col-md-6 offset-md-3">
+                     <div class="subscribe_form ">
+                        <div class="heading_container heading_center">
+                           <h3>Checkout</h3>
+                        </div>
+                        <!--<p>When you logge</p>-->
+                        <form action="checkout" method="POST">
+                           {% csrf_token %}
+                           <table>
+                              <tr>
+                                 <th>Product</th>
+                                 <th>Price</th>
+                                 <th>Quantity</th>
+
+                                 <th>Total</th>
+
+                              </tr>
+                              {% for product in products %}
+                              <tr>
+                                 <td id="name_{{product.id}}" name="name_{{product.id}}" class="details">{{product.name}}</td>
+                                 <td id="price_{{product.id}}" value="{{product.price}}" class="{{product.price}}"><span class="details">{{product.price}}$</span>
+                                    </td>
+                                 {% for key, value in cart.items %}
+                                 {%if key in product.name%}
+                                 <td><input id="{{product.id}}" type="number" value="{{value}}" onchange="changeTotalMoney(this.id)" min="0" name="quantity_0" ></td>
+                                 <td id="money_{{product.id}}" class="money details" class="">{%widthratio product.price 1 value %}$</td>
+                                 {% endif %}
+                                 {% endfor %}
+
+                              </tr>
+                              {%endfor%}
+                           </table>
+                           <input type="text" name="adress" placeholder="Adress"><br>
+                           <input type="tel" name="phone_number" placeholder="Phone number"><br> 
+                           <h1 id="total-money">Total money: {{total_money|floatformat}}$</h1><br>
+                           <input type="hidden" name="details" value="" id="js_data_output">
+                           <input type="hidden" name="price"  id="hidden_price" value="">
+                           <input type="hidden" name="name_of_the_product"  id="name_of_the_product" value="">
+                           <input type="submit" placeholder="Submit">
+                        </form>
+                        <br><br>
+                        <div>
+                           {% for message in messages %}
+                           <h3>{{message}}</h3>
+                           {% endfor %}
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
       <!-- end header section -->
       <!-- slider section -->
 
-
-      <h1>{{key}} {{value}}</h1>
-      <form action="checkout" method="POST">
+      <!--
+         <form action="checkout" method="POST">
          {% csrf_token %}
-         <table>
-            <tr>
-               <th>Product</th>
-               <th>Price</th>
-               <th>Quantity</th>
 
-               <th>Total</th>
-
-            </tr>
-            {% for product in products %}
-            <tr>
-               <td id="name_{{product.id}}" name="name_{{product.id}}">{{product.name}}</td>
-               <td id="price_{{product.id}}" value="{{product.price}}" class="{{product.price}}">{{product.price}}$</td>
-               {% for key, value in cart.items %}
-               {%if key in product.name%}
-               <td><input id="{{product.id}}" type="number" value="{{value}}" onchange="changeTotalMoney(this.id)"
-                     min="0" name="quantity_0"></td>
-               <td id="money_{{product.id}}" class="money">{%widthratio product.price 1 value %}$</td>
-               {% endif %}
-               {% endfor %}
-
-            </tr>
-            {%endfor%}
-         </table>
-         <h1 id="total-money">Total money: {{total_money|floatformat}}$</h1>
-         
-         <a href="check_out" id="check-out">
-            <input type="submit" onclick="">
-         </a>
-      
-      </form>
+        
+-->
+      </section>
       <script>
+         let hidden_price = document.getElementById('hidden_price')
+         let details=""
+         let details_el=document.getElementsByClassName('details')
+         for (let i = 0; i < details_el.length; i++) {
+            details += details_el[i].textContent+" "
+         }
+         hidden_price.value = '{{total_money}}'
+         let js_data_output=document.getElementById('js_data_output');
+         js_data_output.value = details;
          function changeTotalMoney(id) {
+            let details=""
             let price = document.getElementById('price_' + id);
             console.log('price_' + id)
             let quantity = document.getElementById(id).value
@@ -219,36 +288,17 @@
             }
             let total_money = document.getElementById('total-money')
             total_money.textContent = 'Total money: ' + sum + '$'
-            let cart_money = document.getElementById('cart-money')
-            alert(cart_money.textContent)
-            cart.textContent = sum
+            
+            hidden_price.value=sum
+            console.log(hidden_price.value)
+            
+            let details_el=document.getElementsByClassName('details')
+            for (let i = 0; i < details_el.length; i++) {
+               details += details_el[i].textContent+" "
+            }
+            
+            js_data_output.value = details;
          }
-
-
-         let addBtn = document.getElementById('add-button')
-         addBtn.addEventListener('click', function () {
-            var productId = this.dataset.product
-            var action = this.dataset.action
-            console.log('productId:', productId, 'action:', action)
-            console.log('USER:', user)
-            var url = '/checkout/'
-            fetch(url, {
-               method: 'Post',
-               headers: {
-                  'Content-Type': 'application/json',
-                  'X-CSRFToken': csrftoken,
-               },
-               body: JSON.stringify({ 'productId': productId, 'action': action })
-            })
-               .then((response) => {
-                  return response.json()
-               })
-               .then((data) => {
-                  window.location = "http://127.0.0.1:8000/checkout";
-                  console.log(data)
-               })
-         })
-
       </script>
       <!-- why section 
       <section class="why_section layout_padding">
