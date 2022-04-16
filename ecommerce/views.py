@@ -1,6 +1,7 @@
+from ast import Or
 from math import prod
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import *
 import json 
 
@@ -130,7 +131,53 @@ def checkout(request):
    cart_dict={}
    total_money=0
    #name = request.POST['name_2']
-   return render(request, 'checkout.html')
+   order = Order()
+
+   adress=request.POST['adress']
+   print(adress)
+   order.adress=adress
+
+   phone_number = request.POST['phone_number']
+   print(phone_number)
+   order.phone_number=phone_number
+
+   user = request.user
+   print(user)
+   order.user = user
+
+   email = request.user.email
+   print(email)
+   order.email = email
+
+   last_name = request.user.last_name
+   print(last_name)
+   order.last_name = last_name
+
+   first_name = request.user.first_name
+   print(first_name)
+   order.first_name = first_name
+
+   total_price = request.POST['price']
+   print(total_price)
+   order.price=total_price
+
+   details = request.POST['details']
+   print(details)
+   order.details = details
+
+   order.save()
+
+   return redirect('/')
    #for i in range(len(products)):
       #cart_checkout[]
 
+def account(request):
+   all_orders = Order.objects.all()
+   user_order = []
+   print("Hello1")
+   for order in all_orders:
+      print(f"{order.user}{request.user}")
+      if f"{order.user}" == f"{request.user}":
+         user_order.append(order)
+         print("Hello3")
+   return render(request, 'account.html',{'orders':user_order})
