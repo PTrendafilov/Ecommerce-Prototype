@@ -127,6 +127,7 @@ def add_to_cart(request):
 
 
 def checkout(request):
+
    global total_money, cart_dict
    cart_dict={}
    total_money=0
@@ -173,6 +174,10 @@ def checkout(request):
 
 def account(request):
    all_orders = Order.objects.all()
+
+   menu=Menu.objects.first()
+
+   site=Site.objects.first()
    user_order = []
    print("Hello1")
    for order in all_orders:
@@ -180,4 +185,17 @@ def account(request):
       if f"{order.user}" == f"{request.user}":
          user_order.append(order)
          print("Hello3")
-   return render(request, 'account.html',{'orders':user_order})
+   
+   return render(request, 'account.html',{'orders':user_order, 'menu':menu, 'site':site,'total_money':total_money })
+def edit(request):
+   id = request.POST['edit']
+   print(id)
+   order =  Order.objects.get(id=id)
+   order.delete()
+   return redirect('/products')
+def delete(request):
+   id = request.POST['delete']
+   print(id)
+   order =  Order.objects.get(id=id)
+   order.delete()
+   return redirect('/account')

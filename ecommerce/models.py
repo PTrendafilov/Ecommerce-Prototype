@@ -41,3 +41,4 @@ class Order(models.Model):
     price = models.FloatField()
     is_ready=models.BooleanField(default=False)
     
+    

@@ -20,4 +20,7 @@ urlpatterns=[
     path('checkout', views.checkout, name='checkout'),
 
     path('account', views.account, name='account'),
+
+    path('edit', views.edit, name='edit'),
+    path('delete', views.delete, name='delete'),
 ]
